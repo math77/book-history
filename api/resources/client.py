@@ -1,5 +1,6 @@
 from flask import jsonify, request
 from flask_restful import Resource
+from extensions import db
 from api.models import Client
 
 
@@ -20,3 +21,9 @@ class ClientResource(Resource):
             return jsonify([client.to_dict() for client in data])
         data = Client.query.filter_by(id=id_client).first()
         return jsonify(data.to_dict())
+
+
+    def delete(self, id_client):
+        Client.query.filter_by(id=id_client).delete()
+        db.session.commit()
+        return jsonify({'message': 'Deleted', 'code': '200'})
