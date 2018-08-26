@@ -2,6 +2,7 @@ from flask import Flask
 from config import Config
 from extensions import db, migrate, api, dynaconf
 from api.resources.client import ClientResource
+from api.resources.book import BookResource
 from api import models
 
 
@@ -15,5 +16,5 @@ def create_app():
     dynaconf.init_app(app)
 
     api.add_resource(ClientResource, '/client', '/client/<int:id_client>')
-    #api.add_resource(ClientResource, '/client/<int: id_client>')
+    api.add_resource(BookResource, '/book', '/book/<int:id_book>')
     return app

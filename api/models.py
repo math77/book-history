@@ -31,7 +31,7 @@ class Client(db.Model):
         return {
             "id": self.id,
             "username": self.username,
-            "email": self.email 
+            "email": self.email
         }
 
 
@@ -42,6 +42,23 @@ class Book(db.Model):
     title = db.Column(db.String(60), nullable=False)
     description = db.Column(db.Text)
     author = db.Column(db.String(40))
+
+    def __init__(self, title, description, author):
+        self.title = title
+        self.description = description
+        self.author = author
+
+    def save(self):
+        db.session.add(self)
+        db.session.commit()
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "title": self.title,
+            "description": self.description,
+            "author": self.author
+        }
 
     def __repr__(self):
         return "Book <{}>".format(self.title)
